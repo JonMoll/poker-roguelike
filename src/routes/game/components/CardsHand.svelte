@@ -6,7 +6,7 @@
 
 <div class="container" bind:this={container}>
     {#each Array(8) as _}
-        <Card containerWidth={"4em"} isSelected={false} />
+        <Card />
     {/each}
 </div>
 

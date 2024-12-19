@@ -3,8 +3,8 @@
         containerWidth = "4em",
         isSelected = false,
     }:{
-        containerWidth: string,
-        isSelected: boolean,
+        containerWidth?: string,
+        isSelected?: boolean,
     } = $props();
 
     let container: HTMLDivElement;
