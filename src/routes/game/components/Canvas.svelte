@@ -1,12 +1,23 @@
 <script lang="ts">
     import { onMount } from "svelte";
 
-    export let fontRatio: number = 0.03;
-    export let aspectRatio: number = 16 / 9;
-    export let containerWidth: string = "100dvw";
-    export let containerHeight: string = "100dvh";
-    export let containerColor: string = "#323232";
-    export let canvasColor: string = "#ffffff";
+    let {
+        children,
+        fontRatio = 0.03,
+        aspectRatio = 16 / 9,
+        containerWidth = "100dvw",
+        containerHeight = "100dvh",
+        containerColor = "#323232",
+        canvasColor = "#ffffff",
+    }:{
+        children?: any,
+        fontRatio?: number,
+        aspectRatio?: number,
+        containerWidth?: string,
+        containerHeight?: string,
+        containerColor?: string,
+        canvasColor?: string,
+    } = $props();
 
     let container: HTMLDivElement;
     let canvas: HTMLDivElement;
@@ -55,7 +66,7 @@
         style:background-color={canvasColor}
         bind:this={canvas}
     >
-        <slot />
+        {@render children?.()}
     </div>
 </div>
 
