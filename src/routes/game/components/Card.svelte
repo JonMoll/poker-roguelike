@@ -1,26 +1,48 @@
 <script lang="ts">
+    import {
+        getValueSymbol,
+        getSuitSymbol,
+        getSuitColor,
+    } from "$game/scripts/card";
+
     let {
-        containerWidth = "4em",
-        isSelected = false,
+        value,
+        suit,
+        isSelected = $bindable(),
     }:{
-        containerWidth?: string,
-        isSelected?: boolean,
+        value: number,
+        suit: number,
+        isSelected: boolean,
     } = $props();
 
     let container: HTMLDivElement;
     let aspectRatio: number = 3.5 / 2.5;
+    let containerWidth: string = "4em";
+    let containerHeight: string = `calc(${containerWidth} * ${aspectRatio})`;
+
+    let clicked = $state(false);
+    let clickContainer = () => {
+        clicked = true;
+        isSelected = !isSelected;
+    };
 </script>
 
 <!-- svelte-ignore a11y_click_events_have_key_events -->
 <!-- svelte-ignore a11y_no_static_element_interactions -->
 <div
-    class="container {isSelected ? 'selected' : 'not-selected'}"
+    class="container {clicked ? (isSelected ? 'selected' : 'not-selected') : ''}"
     style:width={containerWidth}
-    style:height={`calc(${containerWidth} * ${aspectRatio})`}
-    style:border-radius={`calc(${containerWidth} * 0.1)`}
-    onclick={() => {isSelected = !isSelected}}
+    style:height={containerHeight}
+    onclick={clickContainer}
     bind:this={container}
 >
+    <div class="symbol-value">
+        <div style:color={getSuitColor(suit)}> {getValueSymbol(value)} </div>
+    </div>
+
+    <div class="symbol-suit">
+        <div style:color={getSuitColor(suit)}> {getSuitSymbol(suit)} </div>
+    </div>
 </div>
 
 <style>
@@ -49,6 +71,8 @@
         justify-content: center;
         margin: 0.25em;
         border: 0.1em solid black;
+        border-radius: 0.3em;
+        user-select: none;
     }
 
     .selected {
@@ -57,5 +81,17 @@
 
     .not-selected {
         animation: not-selected 0.25s forwards;
+    }
+
+    .symbol-value {
+        position: absolute;
+        width: 1em;
+        transform: translateX(-1.25em) translateY(-2.0em);
+    }
+
+    .symbol-suit {
+        position: absolute;
+        width: 1em;
+        transform: translateX(-1.25em) translateY(-1.0em);
     }
 </style>
