@@ -58,3 +58,20 @@ export const discardHand = (
 
     return [hand, discarded];
 };
+
+
+export const playHand = (
+    hand: CardState[],
+    played: CardState[],
+): [CardState[], CardState[]] => {
+    hand = hand.filter(card => {
+        if (card.isSelected) {
+            card.isSelected = false;
+            played.push(card);
+            return false;
+        }
+        return true;
+    });
+
+    return [hand, played];
+};

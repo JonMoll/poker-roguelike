@@ -5,6 +5,7 @@
     import {
         drawCards,
         discardHand,
+        playHand,
     } from "$game/scripts/game";
 
     let {
@@ -12,11 +13,13 @@
         deck = $bindable(),
         hand = $bindable(),
         discarded = $bindable(),
+        played = $bindable(),
     }:{
         handSize: number,
         deck: CardState[],
         hand: CardState[],
         discarded: CardState[],
+        played: CardState[],
     } = $props();
 
     let container: HTMLDivElement;
@@ -24,6 +27,10 @@
     let clickDiscard = () => {
         [hand, discarded] = discardHand(hand, discarded);
         [deck, hand] = drawCards(deck, hand, handSize);
+    };
+
+    let clickPlayHand = () => {
+        [hand, played] = playHand(hand, played);
     };
 
     onMount(() => {
@@ -44,7 +51,7 @@
         {/each}
     </div>
     <div class="buttons">
-        <div class="button"> Play Hand </div>
+        <div class="button" onclick={clickPlayHand}> Play Hand </div>
         <div class="button" onclick={clickDiscard}> Discard </div>
     </div>
 </div>
