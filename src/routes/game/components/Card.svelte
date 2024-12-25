@@ -16,9 +16,6 @@
     } = $props();
 
     let container: HTMLDivElement;
-    let aspectRatio: number = 3.5 / 2.5;
-    let containerWidth: string = "4em";
-    let containerHeight: string = `calc(${containerWidth} * ${aspectRatio})`;
 
     let clicked = $state(false);
     let clickContainer = () => {
@@ -31,8 +28,6 @@
 <!-- svelte-ignore a11y_no_static_element_interactions -->
 <div
     class="container {clicked ? (isSelected ? 'selected' : 'not-selected') : ''}"
-    style:width={containerWidth}
-    style:height={containerHeight}
     onclick={clickContainer}
     bind:this={container}
 >
@@ -69,18 +64,20 @@
         position: static;
         align-items: center;
         justify-content: center;
-        margin: 0.25em;
+        width: 4em;
+        height: 5.6em;
+        margin: 0.2em;
         border: 0.1em solid black;
         border-radius: 0.3em;
         user-select: none;
     }
 
     .selected {
-        animation: selected 0.25s forwards;
+        animation: selected 0.2s forwards;
     }
 
     .not-selected {
-        animation: not-selected 0.25s forwards;
+        animation: not-selected 0.2s forwards;
     }
 
     .symbol-value {

@@ -54,21 +54,18 @@
         position: absolute;
         transform: translateY(8em);
         margin: 0em;
-        border: 0.1em solid red;
     }
 
     .cards {
         display: flex;
         align-items: center;
         justify-content: center;
-        border: 0.1em solid green;
     }
 
     .buttons {
         display: flex;
         align-items: center;
         justify-content: center;
-        border: 0.1em solid blue;
     }
 
     .button {
