@@ -51,17 +51,20 @@ export const drawCards = (
 export const discardHand = (
     hand: CardState[],
     discarded: CardState[],
-): [CardState[], CardState[]] => {
+): [CardState[], CardState[], boolean] => {
+    let discardedAtLeastOne = false;
+
     hand = hand.filter(card => {
         if (card.isSelected) {
             card.isSelected = false;
             discarded.push(card);
+            discardedAtLeastOne = true;
             return false;
         }
         return true;
     });
 
-    return [hand, discarded];
+    return [hand, discarded, discardedAtLeastOne];
 };
 
 export const playHand = (
@@ -78,6 +81,16 @@ export const playHand = (
     });
 
     return [hand, played];
+};
+
+export const discardPlayed = (
+    played: CardState[],
+    discarded: CardState[],
+): [CardState[], CardState[]] => {
+    discarded.push(...played);
+    played.length = 0;
+
+    return [played, discarded];
 };
 
 export const disableCards = (cards: CardState[]): void => {

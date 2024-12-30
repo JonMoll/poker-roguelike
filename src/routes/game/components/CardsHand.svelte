@@ -6,7 +6,6 @@
         discardHand,
         playHand,
         disableCards,
-        enableCards,
     } from "$game/scripts/game";
 
     let {
@@ -28,14 +27,18 @@
     [deck, hand] = drawCards(deck, hand, handSize);
 
     let clickDiscard = () => {
-        [hand, discarded] = discardHand(hand, discarded);
-        [deck, hand] = drawCards(deck, hand, handSize);
+        let discardedAtLeastOne: boolean;
+        [hand, discarded, discardedAtLeastOne] = discardHand(hand, discarded);
+
+        if (discardedAtLeastOne) {
+            [deck, hand] = drawCards(deck, hand, handSize);
+        }
     };
 
     let clickPlayHand = () => {
         [hand, played] = playHand(hand, played);
+        disableCards(hand);
         disableCards(played);
-        [deck, hand] = drawCards(deck, hand, handSize);
     };
 </script>
 
@@ -61,7 +64,7 @@
 <style>
     .container {
         position: absolute;
-        transform: translateY(8em);
+        transform: translateY(11em);
         margin: 0em;
     }
 

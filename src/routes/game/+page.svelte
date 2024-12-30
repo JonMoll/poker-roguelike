@@ -18,6 +18,10 @@
 
 <Canvas>
     <CardsPlayed
+        handSize={handSize}
+        bind:deck={deck}
+        bind:hand={hand}
+        bind:discarded={discarded}
         bind:played={played}
     />
     <CardsHand
