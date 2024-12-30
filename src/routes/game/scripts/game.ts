@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid';
 import { type CardState } from "$game/scripts/card";
 
 export const generateDeck = (): CardState[] => {
@@ -6,6 +7,7 @@ export const generateDeck = (): CardState[] => {
     for (let value = 1; value <= 13; value++) {
         for (let suit = 1; suit <= 4; suit++) {
             deck.push({
+                uuid: uuidv4(),
                 value,
                 suit,
                 isSelected: false,

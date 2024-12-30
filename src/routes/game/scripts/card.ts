@@ -1,4 +1,5 @@
 export type CardState = {
+    uuid: string,
     value: number,
     suit: number,
     isSelected: boolean,
