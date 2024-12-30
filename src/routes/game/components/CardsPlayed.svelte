@@ -13,12 +13,14 @@
         hand = $bindable(),
         discarded = $bindable(),
         played = $bindable(),
+        handButtonsEnabled = $bindable(),
     }:{
         handSize: number,
         deck: CardState[],
         hand: CardState[],
         played: CardState[],
         discarded: CardState[],
+        handButtonsEnabled: boolean,
     } = $props();
 
     let container: HTMLDivElement;
@@ -28,6 +30,7 @@
         [deck, hand] = drawCards(deck, hand, handSize);
         enableCards(hand);
         enableCards(played);
+        handButtonsEnabled = true;
     };
 </script>
 

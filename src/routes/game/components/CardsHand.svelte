@@ -14,12 +14,14 @@
         hand = $bindable(),
         discarded = $bindable(),
         played = $bindable(),
+        handButtonsEnabled = $bindable(),
     }:{
         handSize: number,
         deck: CardState[],
         hand: CardState[],
         discarded: CardState[],
         played: CardState[],
+        handButtonsEnabled: boolean,
     } = $props();
 
     let container: HTMLDivElement;
@@ -27,18 +29,23 @@
     [deck, hand] = drawCards(deck, hand, handSize);
 
     let clickDiscard = () => {
-        let discardedAtLeastOne: boolean;
-        [hand, discarded, discardedAtLeastOne] = discardHand(hand, discarded);
+        if (handButtonsEnabled) {
+            let discardedAtLeastOne: boolean;
+            [hand, discarded, discardedAtLeastOne] = discardHand(hand, discarded);
 
-        if (discardedAtLeastOne) {
-            [deck, hand] = drawCards(deck, hand, handSize);
-        }
+            if (discardedAtLeastOne) {
+                [deck, hand] = drawCards(deck, hand, handSize);
+            };
+        };
     };
 
     let clickPlayHand = () => {
-        [hand, played] = playHand(hand, played);
-        disableCards(hand);
-        disableCards(played);
+        if (handButtonsEnabled) {
+            [hand, played] = playHand(hand, played);
+            disableCards(hand);
+            disableCards(played);
+            handButtonsEnabled = false;
+        };
     };
 </script>
 

@@ -14,6 +14,7 @@
     let hand: CardState[] = $state([]);
     let discarded: CardState[] = $state([]);
     let played: CardState[] = $state([]);
+    let handButtonsEnabled: boolean = $state(true);
 </script>
 
 <Canvas>
@@ -23,6 +24,7 @@
         bind:hand={hand}
         bind:discarded={discarded}
         bind:played={played}
+        bind:handButtonsEnabled={handButtonsEnabled}
     />
     <CardsHand
         handSize={handSize}
@@ -30,5 +32,6 @@
         bind:hand={hand}
         bind:discarded={discarded}
         bind:played={played}
+        bind:handButtonsEnabled={handButtonsEnabled}
     />
 </Canvas>
