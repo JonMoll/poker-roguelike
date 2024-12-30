@@ -1,11 +1,12 @@
 <script lang="ts">
-    import { onMount } from "svelte";
     import Card from "$game/components/Card.svelte";
     import { type CardState } from "$game/scripts/card";
     import {
         drawCards,
         discardHand,
         playHand,
+        disableCards,
+        enableCards,
     } from "$game/scripts/game";
 
     let {
@@ -24,6 +25,8 @@
 
     let container: HTMLDivElement;
 
+    [deck, hand] = drawCards(deck, hand, handSize);
+
     let clickDiscard = () => {
         [hand, discarded] = discardHand(hand, discarded);
         [deck, hand] = drawCards(deck, hand, handSize);
@@ -31,11 +34,9 @@
 
     let clickPlayHand = () => {
         [hand, played] = playHand(hand, played);
-    };
-
-    onMount(() => {
+        disableCards(played);
         [deck, hand] = drawCards(deck, hand, handSize);
-    });
+    };
 </script>
 
 <!-- svelte-ignore a11y_click_events_have_key_events -->
@@ -47,6 +48,7 @@
                 value={card.value}
                 suit={card.suit}
                 bind:isSelected={card.isSelected}
+                bind:isEnabled={card.isEnabled}
             />
         {/each}
     </div>

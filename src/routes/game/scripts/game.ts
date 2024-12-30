@@ -5,7 +5,12 @@ export const generateDeck = (): CardState[] => {
 
     for (let value = 1; value <= 13; value++) {
         for (let suit = 1; suit <= 4; suit++) {
-            deck.push({ value, suit, isSelected: false });
+            deck.push({
+                value,
+                suit,
+                isSelected: false,
+                isEnabled: true,
+            });
         }
     }
 
@@ -59,7 +64,6 @@ export const discardHand = (
     return [hand, discarded];
 };
 
-
 export const playHand = (
     hand: CardState[],
     played: CardState[],
@@ -74,4 +78,16 @@ export const playHand = (
     });
 
     return [hand, played];
+};
+
+export const disableCards = (cards: CardState[]): void => {
+    cards.forEach(card => {
+        card.isEnabled = false;
+    });
+};
+
+export const enableCards = (cards: CardState[]): void => {
+    cards.forEach(card => {
+        card.isEnabled = true;
+    });
 };

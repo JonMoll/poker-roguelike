@@ -9,25 +9,35 @@
         value,
         suit,
         isSelected = $bindable(),
+        isEnabled = $bindable(),
     }:{
         value: number,
         suit: number,
         isSelected: boolean,
+        isEnabled: boolean,
     } = $props();
 
     let container: HTMLDivElement;
 
-    let clicked = $state(false);
     let clickContainer = () => {
-        clicked = true;
-        isSelected = !isSelected;
+        if (isEnabled) {
+            isSelected = !isSelected;
+        };
+    };
+
+    let classSelected = (): string => {
+        if (isSelected) {
+            return "selected";
+        } else {
+            return "not-selected";
+        };
     };
 </script>
 
 <!-- svelte-ignore a11y_click_events_have_key_events -->
 <!-- svelte-ignore a11y_no_static_element_interactions -->
 <div
-    class="container {clicked ? (isSelected ? 'selected' : 'not-selected') : ''}"
+    class="container {classSelected()}"
     onclick={clickContainer}
     bind:this={container}
 >
@@ -59,6 +69,14 @@
         }
     }
 
+    .selected {
+        animation: selected 0.2s forwards;
+    }
+
+    .not-selected {
+        animation: not-selected 0.2s forwards;
+    }
+
     .container {
         display: flex;
         position: static;
@@ -70,14 +88,7 @@
         border: 0.1em solid black;
         border-radius: 0.3em;
         user-select: none;
-    }
-
-    .selected {
-        animation: selected 0.2s forwards;
-    }
-
-    .not-selected {
-        animation: not-selected 0.2s forwards;
+        background-color: white;
     }
 
     .symbol-value {

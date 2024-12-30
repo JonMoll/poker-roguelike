@@ -2,6 +2,7 @@ export type CardState = {
     value: number,
     suit: number,
     isSelected: boolean,
+    isEnabled: boolean,
 }
 
 export const getValueSymbol = (value: number): string => {

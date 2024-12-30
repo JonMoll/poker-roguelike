@@ -20,6 +20,7 @@
                 value={card.value}
                 suit={card.suit}
                 bind:isSelected={card.isSelected}
+                bind:isEnabled={card.isEnabled}
             />
         {/each}
     </div>
