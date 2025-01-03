@@ -1,5 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import { type CardState } from "$game/scripts/card";
+import { type PokerHandState } from "$game/scripts/poker-hands";
 
 export const generateDeck = (): CardState[] => {
     const deck: CardState[] = [];
@@ -105,4 +106,44 @@ export const enableCards = (cards: CardState[]): void => {
     cards.forEach(card => {
         card.isEnabled = true;
     });
+};
+
+export const setPokerHandSelection = (
+    pokerHands: PokerHandState[],
+    value: boolean,
+    name?: string,
+): void => {
+    if (name) {
+        const hand = pokerHands.find(hand => hand.name === name);
+        if (hand) {
+            hand.isSelected = value;
+        }
+    } else {
+        pokerHands.forEach(hand => {
+            hand.isSelected = value;
+        });
+    }
+};
+
+export const setCardSelection = (
+    cards: CardState[],
+    value: boolean,
+    cardsSelected?: CardState[],
+): void => {
+    if (cardsSelected) {
+        const selectedUuids = new Set(cardsSelected.map(card => card.uuid));
+        cards.forEach(card => {
+            if (selectedUuids.has(card.uuid)) {
+                card.isSelected = value;
+            }
+        });
+    } else {
+        cards.forEach(card => {
+            card.isSelected = value;
+        });
+    }
+};
+
+export const countSelectedCards = (cards: CardState[]): number => {
+    return cards.filter(card => card.isSelected).length;
 };

@@ -1,4 +1,7 @@
 <script lang="ts">
+    import { type CardState } from "$game/scripts/card";
+    import { countSelectedCards } from "$game/scripts/game";
+
     import {
         getValueSymbol,
         getSuitSymbol,
@@ -10,18 +13,25 @@
         suit,
         isSelected = $bindable(),
         isEnabled = $bindable(),
+        cards = $bindable(),
+        maxSelectedCards,
     }:{
         value: number,
         suit: number,
         isSelected: boolean,
         isEnabled: boolean,
+        cards: CardState[],
+        maxSelectedCards: number,
     } = $props();
 
     let container: HTMLDivElement;
 
     let clickContainer = () => {
+        let numSelectedCards: number = countSelectedCards(cards);
         if (isEnabled) {
-            isSelected = !isSelected;
+            if (isSelected || numSelectedCards < maxSelectedCards) {
+                isSelected = !isSelected;
+            }
         };
     };
 

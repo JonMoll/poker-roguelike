@@ -1,26 +1,37 @@
 <script lang="ts">
     import Card from "$game/components/Card.svelte";
     import { type CardState } from "$game/scripts/card";
+    import { type PokerHandState } from "$game/scripts/poker-hands";
+    import {
+        getPokerHandName,
+        getPokerHandCards,
+    } from "$game/scripts/poker-hands";
     import {
         drawCards,
         discardHand,
         playHand,
         disableCards,
+        setPokerHandSelection,
+        setCardSelection,
     } from "$game/scripts/game";
 
     let {
         handSize,
+        maxSelectedCards,
         deck = $bindable(),
         hand = $bindable(),
         discarded = $bindable(),
         played = $bindable(),
+        pokerHands = $bindable(),
         handButtonsEnabled = $bindable(),
     }:{
         handSize: number,
+        maxSelectedCards: number,
         deck: CardState[],
         hand: CardState[],
         discarded: CardState[],
         played: CardState[],
+        pokerHands: PokerHandState[],
         handButtonsEnabled: boolean,
     } = $props();
 
@@ -45,6 +56,12 @@
             disableCards(hand);
             disableCards(played);
             handButtonsEnabled = false;
+
+            let pokerHandName = getPokerHandName(played);
+            setPokerHandSelection(pokerHands, true, pokerHandName);
+
+            let cardsSelected = getPokerHandCards(pokerHandName, played);
+            setCardSelection(played, true, cardsSelected);
         };
     };
 </script>
@@ -59,6 +76,8 @@
                 suit={card.suit}
                 bind:isSelected={card.isSelected}
                 bind:isEnabled={card.isEnabled}
+                bind:cards={hand}
+                maxSelectedCards={maxSelectedCards}
             />
         {/each}
     </div>
